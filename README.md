@@ -1,59 +1,111 @@
 # SzabaduloSzoba
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+Ez a projekt egy szabadulószoba játék, amely Angular keretrendszerrel készült. A játék célja, hogy a játékos megtalálja a kulcsot, és kijusson a pályáról.
 
-## Development server
+## Fejlesztési környezet
 
-To start a local development server, run:
+- **Angular CLI**: 19.2.7
+- **Node.js**: 16.x vagy újabb
+- **NPM**: 8.x vagy újabb
 
-```bash
-ng serve
-```
+## Telepítés és futtatás
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. Klónozd a repót:
+   ```bash
+   git clone https://github.com/felhasznalonev/szabadulo-szoba.git
+   cd szabadulo-szoba
+   ```
 
-## Code scaffolding
+2. Telepítsd a szükséges csomagokat:
+   ```bash
+   npm install
+   ```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+3. Indítsd el a fejlesztői szervert:
+   ```bash
+   ng serve
+   ```
 
-```bash
-ng generate component component-name
-```
+4. Nyisd meg a böngészőt, és látogasd meg az alábbi URL-t:
+   ```
+   http://localhost:4200
+   ```
+## Specifikáció
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Leírás
+- A weboldalra a látogató tud regisztrálni, majd belépni.
+- A bejelentkezett felhasználó megnézheti a profilját, módosíthatja adatait.
+- A bejelentkezett felhasználó választhat pályák közül, amiket feloldott (alap esetben csak az 1. pálya van feloldva).
+- A bejelentkezett felhasználó játszhat a játékkal.
 
-```bash
-ng generate --help
-```
+### Játék leírása
+- A játékos a W,A,S,D billentyűkkel irányíthatja a karakterét
+- A pályán el kell jutni a kijárathoz.
+- A kijárat csak akkor elérhető, ha felvesz egy kulcsot, ami a pályán található.
+- Ha sikerül eljutni a kijárathoz, feloldódik a következő szint.
 
-## Building
 
-To build the project run:
+### To-Do list
+- Profil adatok és feloldott pályák helyes tárolása.
+- A játék lekorlátozása bejelentkezett felhasználókra.
+- A pályák elérhetőségének limitálása.
+- A játék kinézetének, elrendezésének feljavítása.
+- Plusz játékelemek.
+- Scoreboard
+## Követelmények és ellenőrzési pontok
 
-```bash
-ng build
-```
+### 1. **Fordítási hiba nincs**
+- Futtasd az `ng serve` parancsot, és ellenőrizd, hogy nincs fordítási hiba.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 2. **Futtatási hiba nincs**
+- Nyisd meg a böngésző konzolját (`F12` → Console fül), és ellenőrizd, hogy nincs hibaüzenet.
 
-## Running unit tests
+### 3. **Adatmodell definiálása**
+- Ezeket az adatmodelleket használom:
+  - **Tile**: A pálya celláinak modellje.
+  - **Progress**: A felhasználó előrehaladásának modellje.
+  - **Level**: A játék szintjeinek modellje.
+  - **User**: A felhasználó modellje.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### 4. **Alkalmazás felbontása megfelelő számú komponensre**
 
-```bash
-ng test
-```
+### 5. **Reszponzív, mobile-first felület**
 
-## Running end-to-end tests
+### 6. **Legalább 2 különböző attribútum direktíva használata**
+- Ezeket az attribútim direktívákat használom például:
+  - **`[class.*]`**: Dinamikus osztályok a cellák típusának megfelelően.
+  - **`[style.*]`**: Dinamikus stílusok a cellák megjelenítéséhez.
 
-For end-to-end (e2e) testing, run:
+### 7. **Legalább 2 különböző beépített vezérlési folyamat használata**
+- Ezeket a vezérlési folyamatokat használom (`game/game.component.ts`):
+  - **`if`**: Játékos mozgásának kezelése.
+  - **`switch`**: A grid celláinak inicializálása. 
+  - **`for`**: A grid celláinak bejárása (pl. kijárat kinyitása).
+    
+### 8. **Adatátadás szülő és gyermek komponensek között**
+- Itt találhatóak: **`hud/hud.component.ts`**:
+  - **`@Input`**: Fogadja a `timer` és `hasKey` értékét a szülőtől.
+  - **`@Output`**: Eseményt küld a szülőnek a játék újraindításához.
 
-```bash
-ng e2e
-```
+### 9. **Legalább 10 különböző Material elem helyes használata**
+- Az alábbi Material elemeket használtam.:
+  - **MatToolbarModule**
+  - **MatButtonModule**
+  - **MatIconModule**
+  - **MatProgressBarModule**
+  - **MatSnackBarModule**
+  - **MatDialogModule**
+  - **MatInputModule**
+  - **MatCheckboxModule**
+  - **MatSelectModule**
+  - **MatTooltipModule**
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 10. **Adatbevitel Angular form-ok segítségével**
+- Ezek az megvalósított Angular form-ok:
+  - **Regisztrációs űrlap**: A `registration/registration.component.ts`-ben.
+  - **Bejelentkezési űrlap**: A `login/login.component.ts`-ben.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### 11. **Legalább 1 saját Pipe osztály írása és használata**
+- Itt található a Pipe osztály: **`pipe/tile-icon.pipe.ts`**:
+  - A cellák típusát ikonokra alakítja át.
+  - Használatban van a grid megjelenítésénél.
