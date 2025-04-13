@@ -1,0 +1,39 @@
+/* filepath: src/app/registration/registration.component.scss */
+.registration-card {
+  background: rgba(0, 0, 0, 0.5); /* Átlátszó fehér háttér */
+  backdrop-filter: blur(10px); /* Homályosítás az üveges hatáshoz */
+  border-radius:0px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Árnyék a kártya alatt */
+  padding: 2rem; /* Térköz a tartalom körül */
+  color: white; /* Fehér szöveg */
+  margin: 1rem auto; /* Középre igazítás */
+  max-width: 400px; /* Maximális szélesség */
+  text-align: center; /* Szöveg középre igazítása */
+
+  }
+  
+  mat-form-field {
+    width: 100%; /* Make the input fields take up the full width */
+    margin-bottom: 1rem; /* Add spacing between fields */
+    cursor:pointer;
+  }
+  
+  button {
+    width: 100%; /* Make the button take up the full width */
+    margin-top: 1rem; /* Add spacing above the button */
+  }
+  .link-text {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  .link-text a {
+    color: #a9afce; /* Material Design kék szín */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .link-text a:hover {
+    text-decoration: underline;
+  }

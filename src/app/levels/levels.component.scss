@@ -1,0 +1,64 @@
+.levels-card {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-align: center;
+  }
+  
+  .levels-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .level-box {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, background 0.2s;
+    border: 10px solid #0c001f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  
+  .level-box.locked {
+    background: #9e9e9e;
+    cursor: not-allowed;
+  }
+  
+  .level-box.locked .lock-icon {
+    position: absolute;
+    font-size: 2rem;
+    color: white;
+  }
+  
+  .level-box:hover:not(.locked) {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+  }
+  
+  .level-box.easy {
+    background: #4caf50; /* Zöld */
+  }
+  
+  .level-box.medium {
+    background: #ff9800; /* Narancssárga */
+  }
+  
+  .level-box.hard {
+    background: #f44336; /* Piros */
+  }

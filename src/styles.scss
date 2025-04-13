@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; width: 100%; }
+body {
+    background-image: url('assets/background5.png'); /* Háttérkép */
+    background-size:cover;/* Háttérkép kitöltése */
+    background-color: #121212; /* Sötét háttér az oldalnak */
+    color: white; /* Alapértelmezett szövegszín */
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }

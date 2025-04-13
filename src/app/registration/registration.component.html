@@ -1,0 +1,21 @@
+<mat-card class="registration-card">
+  <h2>Registration</h2>
+  <form (ngSubmit)="register()">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="username" name="username" placeholder="Enter your username" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email" name="email" type="email" placeholder="Enter your email" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="password" name="password" type="password" placeholder="Enter your password" required />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Register</button>
+  </form>
+  <p class="link-text">
+    Van már fiókod? <a routerLink="/login">Jelentkezz be!</a>
+  </p>
+</mat-card>

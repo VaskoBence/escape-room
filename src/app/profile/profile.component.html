@@ -1,0 +1,29 @@
+<mat-card class="profile-card">
+  <h2>Profile</h2>
+
+  <!-- Megtekintési mód -->
+  <div *ngIf="!isEditing && currentUser">
+    <p><strong>Username:</strong> {{ currentUser.username }}</p>
+    <p><strong>Email:</strong> {{ currentUser.email }}</p>
+    <button mat-raised-button color="primary" (click)="toggleEdit()">Edit Profile</button>
+    <button mat-raised-button color="warn" (click)="deleteAccount()">Delete Account</button>
+  </div>
+
+  <!-- Szerkesztési mód -->
+  <form *ngIf="isEditing && editedUser" (ngSubmit)="saveChanges()">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="editedUser.username" name="username" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="editedUser.email" name="email" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="editedUser.password" name="password" type="password" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Save Changes</button>
+    <button mat-raised-button color="accent" type="button" (click)="toggleEdit()">Cancel</button>
+  </form>
+</mat-card>

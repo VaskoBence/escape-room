@@ -1,0 +1,45 @@
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 500px; /* Nagyobb szélesség */
+    padding: 10px 20px; /* Extra belső margó */
+    background-color: #2c3e50; /* Sötétebb háttérszín */
+    border-radius: 10px; /* Lekerekített sarkok */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Árnyék */
+    color: #ecf0f1; /* Világos szöveg */
+    font-size: 1.5rem; /* Nagyobb betűméret */
+    margin-bottom: 20px; /* Távolság a gridtől */
+  }
+  
+  .timer {
+    font-weight: bold; /* Félkövér szöveg */
+  }
+  
+  .key-icon {
+    opacity: 0.5;
+    font-size: 2rem; /* Nagyobb kulcs ikon */
+    transition: transform 0.2s ease; /* Animáció az aktív állapotra */
+  }
+  
+  .key-icon.active {
+    opacity: 1;
+    transform: scale(1.2); /* Kicsit nagyobb méret az aktív kulcsra */
+  }
+  
+  button {
+    background-color: #e74c3c; /* Piros gomb */
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Nagyobb gombméret */
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animáció */
+  }
+  
+  button:hover {
+    background-color: #c0392b; /* Sötétebb piros hover állapot */
+    transform: scale(1.1); /* Kicsit nagyobb hover állapot */
+  }

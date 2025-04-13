@@ -1,0 +1,27 @@
+<div class="game-container">
+  <div class="game-card">
+    <app-hud
+      [timer]="timer"
+      [hasKey]="hasKey"
+      (reset)="onReset()"
+    ></app-hud>
+    <div class="game-grid">
+      <div
+        *ngFor="let row of getVisibleGrid(); let rowIndex = index"
+        class="row"
+      >
+        <div
+          *ngFor="let tile of row; let colIndex = index"
+          class="cell"
+          [class.wall]="tile.type === 'wall'"
+          [class.player]="tile.type === 'player'"
+          [class.exit]="tile.type === 'exit'"
+          [class.locked-exit]="tile.type === 'lockedExit'"
+          [class.key]="tile.type === 'key'"
+        >
+          {{ tile.type | tileIcon }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

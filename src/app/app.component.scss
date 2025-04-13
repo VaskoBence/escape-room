@@ -1,0 +1,37 @@
+/* filepath: src/app/app.component.scss */
+body {
+    background-color: #121212; /* Sötét háttér az oldalnak */
+    color: white; /* Alapértelmezett szövegszín */
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    position: relative; /* Rögzített pozíció a képernyő tetején */
+    top: 0;
+    left: 0;
+    width: 100%; /* Teljes szélesség */
+    display: flex; /* Flexbox a linkek elrendezéséhez */
+    justify-content: space-around; /* Egyenletes elosztás */
+    box-sizing: border-box;
+    align-items: center; /* Függőleges középre igazítás */
+    padding: 1rem; /* Térköz a tartalom körül */
+    z-index: 1000; /* Legyen a legfelső rétegen */
+  }
+  
+  .navbar a {
+    color: white; /* Fehér szöveg */
+    text-decoration: none; /* Aláhúzás eltávolítása */
+    font-weight: bold;
+    padding: 0.5rem 1rem; /* Térköz a linkek körül */
+    transition: text-shadow 0.3s ease; /* Animáció hover-re */
+  }
+  
+  .navbar a:hover {
+    text-shadow: 0 0 25px rgba(255, 255, 255, 1); /* Szöveg kiemelése árnyékkal */
+  }
+  
+  router-outlet {
+    display: block;
+    margin-top: 70px; /* Hely a navbar alatt, hogy ne takarja el a tartalmat */
+  }
