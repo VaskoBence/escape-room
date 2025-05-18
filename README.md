@@ -54,58 +54,100 @@ Ez a projekt egy szabadulószoba játék, amely Angular keretrendszerrel készü
 - Scoreboard
 ## Követelmények és ellenőrzési pontok
 
-### 1. **Fordítási hiba nincs**
-- Futtasd az `ng serve` parancsot, és ellenőrizd, hogy nincs fordítási hiba.
+# Javítói segédlet – Szabaduló szoba Angular projekt
 
-### 2. **Futtatási hiba nincs**
-- Nyisd meg a böngésző konzolját (`F12` → Console fül), és ellenőrizd, hogy nincs hibaüzenet.
+**Fordítási hiba nincs:**  
+- `ng serve` futtatásakor nincs hiba.
 
-### 3. **Adatmodell definiálása**
-- Ezeket az adatmodelleket használom:
-  - **Tile**: A pálya celláinak modellje.
-  - **Progress**: A felhasználó előrehaladásának modellje.
-  - **Level**: A játék szintjeinek modellje.
-  - **User**: A felhasználó modellje.
+**Futtatási hiba nincs:**  
+- A böngésző konzolban sem jelenik meg hiba.
 
-### 4. **Alkalmazás felbontása megfelelő számú komponensre**
+---
 
-### 5. **Reszponzív, mobile-first felület**
+## Követelmények és megvalósításuk helye
 
-### 6. **Legalább 2 különböző attribútum direktíva használata**
-- Ezeket az attribútim direktívákat használom például:
-  - **`[class.*]`**: Dinamikus osztályok a cellák típusának megfelelően.
-  - **`[style.*]`**: Dinamikus stílusok a cellák megjelenítéséhez.
+### 1. Adatmodell definiálása (legalább 4 TypeScript interfész vagy class)
+- `src/app/models/score.model.ts` – `Score` interface
+- `src/app/models/level.model.ts` – `Level` interface
+- `src/app/models/user.model.ts` – `User` interface
+- `src/app/models/progress.model.ts` – `Progress` interface
 
-### 7. **Legalább 2 különböző beépített vezérlési folyamat használata**
-- Ezeket a vezérlési folyamatokat használom (`game/game.component.ts`):
-  - **`if`**: Játékos mozgásának kezelése.
-  - **`switch`**: A grid celláinak inicializálása. 
-  - **`for`**: A grid celláinak bejárása (pl. kijárat kinyitása).
-    
-### 8. **Adatátadás szülő és gyermek komponensek között**
-- Itt találhatóak: **`hud/hud.component.ts`**:
-  - **`@Input`**: Fogadja a `timer` és `hasKey` értékét a szülőtől.
-  - **`@Output`**: Eseményt küld a szülőnek a játék újraindításához.
+### 2. Reszponzív, mobile-first felület
+- Globális: `src/styles.scss`
+- Példák: `app.component.scss`, `game.component.scss`, `profile.component.scss`, `registration.component.scss`
+- Minden oldal mobilon is jól jelenik meg.
 
-### 9. **Legalább 10 különböző Material elem helyes használata**
-- Az alábbi Material elemeket használtam.:
-  - **MatToolbarModule**
-  - **MatButtonModule**
-  - **MatIconModule**
-  - **MatProgressBarModule**
-  - **MatSnackBarModule**
-  - **MatDialogModule**
-  - **MatInputModule**
-  - **MatCheckboxModule**
-  - **MatSelectModule**
-  - **MatTooltipModule**
+### 3. Legalább 4, de 2 különböző attribútum direktíva használata
+- `[ngClass]`, `[ngStyle]`, ezek több helyen is szerepelnek – pl. `level-selector.component.html`, `profile.component.html`, `statistics.component.html`
 
-### 10. **Adatbevitel Angular form-ok segítségével**
-- Ezek az megvalósított Angular form-ok:
-  - **Regisztrációs űrlap**: A `registration/registration.component.ts`-ben.
-  - **Bejelentkezési űrlap**: A `login/login.component.ts`-ben.
+### 4. Legalább 4, de 2 különböző beépített vezérlési folyamat használata
+- `*ngIf`, `*ngFor` – pl. `statistics.component.html`, `profile.component.html`, `levels.component.html`
 
-### 11. **Legalább 1 saját Pipe osztály írása és használata**
-- Itt található a Pipe osztály: **`pipe/tile-icon.pipe.ts`**:
-  - A cellák típusát ikonokra alakítja át.
-  - Használatban van a grid megjelenítésénél.
+
+### 5. Adatátadás szülő és gyermek komponensek között (legalább 3 @Input és 3 @Output)
+- `level-selector.component.ts`:  
+  - `@Input() levels`, `@Input() selectedLevelId`, `@Input() showLocked`
+  - `@Output() selectLevel`, `@Output() filterLevels`, `@Output() addLevel`
+- Használat: `levels.component.html`
+- `hud.component.ts`:
+  - `@Input() @Input() timer,  @Input() hasKey, @Output() reset`
+- Használat: `game.component.html`
+### 6. Legalább 10 különböző Material elem helyes használata
+- `MatCardModule`, `MatFormFieldModule`, `MatInputModule`, `MatButtonModule`, `MatIconModule`, `MatTableModule`, `MatSelectModule`, `MatSnackBarModule`, `MatDialogModule`, `MatProgressBarModule`
+- Példák: `registration.component.html`, `login.component.html`, `profile.component.html`, `levels.component.html`
+
+### 7. Legalább 2 saját Pipe osztály írása és használata
+- `src/app/pipe/tile-icon.pipe.ts` – `TileIconPipe`
+- `src/app/pipe/difficulty-color.pipe.ts` – `DifficultyColorPipe`
+- Használat: `game.component.html, levels.component.html`
+
+### 8. Adatbevitel Angular form-ok segítségével (legalább 4)
+- `registration.component.html` – regisztrációs űrlap
+- `login.component.html` – bejelentkezési űrlap
+- `profile.component.html` – profil szerkesztés
+
+### 9. Legalább 2 különböző Lifecycle Hook használata
+- `ngOnInit` – pl. minden fő komponensben (`game.component.ts`, `statistics.component.ts`, `levels.component.ts`)
+- (Ha van: `ngOnDestroy`, `ngAfterViewInit`)
+
+### 10. CRUD műveletek mindegyike megvalósult legalább a projekt fő entitásához (Promise, Observable használattal)
+- Példa:  
+  - Létrehozás: `game.component.ts` – pont mentése Firestore-ba (`addDoc`)
+  - Olvasás: `statistics.component.ts` – leaderboard lekérdezés (`getDocs`)
+  - Módosítás: `profile.component.ts` – profil frissítés (`updateDoc`)
+  - Törlés: `profile.component.ts` – profil törlés (`deleteDoc`)
+- Promise és Observable is használatban, pl. `statistics.component.ts`
+
+### 11. CRUD műveletek service-ekbe vannak kiszervezve és megfelelő módon injektálva lettek
+- Példa: `user.service.ts` – létrehozás,olvasás, törlés, módosítás
+- Service injektálás: pl. minden fő komponens konstruktorában
+
+### 12. Legalább 4 komplex Firestore lekérdezés (where, rendezés, limit, stb.)
+- `statistics.component.ts` – `loadLeaderboard()` metódus:
+  - Top 10: where + orderBy + limit
+  - Utolsó 7 nap: where + where + orderBy + limit
+  - Saját eredmények: where + where + orderBy + limit
+  - Legjobb mindenkitől: where + orderBy + frontenden aggregálva
+
+### 13. Legalább 4 különböző route a különböző oldalak eléréséhez
+- `app.routes.ts`:
+  - `/login`
+  - `/registration`
+  - `/levels`
+  - `/game/:levelId`
+  - `/profile`
+  - `/statistics`
+
+### 14. AuthGuard implementációja
+- `guards/auth.guard.ts` – és használata: `app.routes.ts` (pl. `canActivate: [authGuard]`)
+
+### 15. Legalább 2 route levédése azonosítással (AuthGuard)
+- `app.routes.ts`:  
+  - `/levels`, `/game/:levelId`, `/profile`, `/statistics` route-ok AuthGuard-dal védve
+
+
+---
+
+**Ha valamelyik követelmény nem lenne egyértelműen megtalálható, kérlek jelezd!**
+
+---
