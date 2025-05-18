@@ -1,8 +1,8 @@
 <nav class="navbar">
-  <ng-container *ngIf="userService.isLoggedIn(); else loggedOut">
+  <ng-container *ngIf="authService.currentUser$ | async as user; else loggedOut">
     <a routerLink="/levels">Levels</a>
     <a routerLink="/profile">Profile</a>
-    <a (click)="logout()">Logout</a>
+    <a class = "logout-link" (click)="logout()">Logout</a>
   </ng-container>
   <ng-template #loggedOut>
     <a routerLink="/login">Login</a>

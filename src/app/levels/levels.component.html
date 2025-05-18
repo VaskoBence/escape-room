@@ -1,19 +1,11 @@
 <mat-card class="levels-card">
   <h2>Select a Level</h2>
-  <div class="levels-container">
-    <div
-      class="level-box"
-      *ngFor="let level of levels"
-      [class.locked]="!level.isUnlocked"
-      [ngClass]="{
-        'easy': level.difficulty === 'easy',
-        'medium': level.difficulty === 'medium',
-        'hard': level.difficulty === 'hard'
-      }"
-      (click)="navigateToGame(level.id)"
-    >
-      <span>{{ level.name }}</span>
-      <span *ngIf="!level.isUnlocked" class="lock-icon">🔒</span>
-    </div>
-  </div>
+  <app-level-selector
+    [levels]="levels"
+    [selectedLevelId]="selectedLevelId"
+    [showLocked]="true"
+    (selectLevel)="navigateToGame($event)"
+    (filterLevels)="onFilterLevels($event)"
+    (addLevel)="onAddLevel()"
+  ></app-level-selector>
 </mat-card>

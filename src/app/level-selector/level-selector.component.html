@@ -1,0 +1,17 @@
+
+  <div class="levels-container">
+    <div
+      class="level-box"
+      *ngFor="let level of levels"
+      [class.locked]="!level.isUnlocked"
+      [ngClass]="{
+        'easy': level.difficulty === 'easy',
+        'medium': level.difficulty === 'medium',
+        'hard': level.difficulty === 'hard'
+      }"
+      (click)="level.isUnlocked ? onSelect(level.id) : null"
+    >
+      <span>{{ level.name }}</span>
+      <span *ngIf="!level.isUnlocked" class="lock-icon">🔒</span>
+    </div>
+  </div>

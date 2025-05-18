@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from './services/user.service';
-import { CommonModule } from '@angular/common'; // Import CommonModule for *ngIf
-import { RouterModule } from '@angular/router'; // Import RouterModule for router-outlet
+import { AuthService } from './services/auth.service';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,15 @@ import { RouterModule } from '@angular/router'; // Import RouterModule for route
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public userService: UserService, private router: Router) {}
+  title = 'szabadulo-szoba'
+  constructor(public authService: AuthService, private router: Router) {}
 
-  logout(): void {
-    this.userService.logout();
-    this.router.navigate(['/login']); // Navigálás a login oldalra kijelentkezés után
-  }
+  async logout(): Promise<void> {
+  await this.authService.logout();
+  this.authService.currentUser$.pipe(take(1)).subscribe(user => {
+    if (!user) {
+      this.router.navigate(['/login']);
+    }
+  });
+}
 }

@@ -35,3 +35,7 @@ body {
     display: block;
     margin-top: 70px; /* Hely a navbar alatt, hogy ne takarja el a tartalmat */
   }
+
+.logout-link {
+  cursor: pointer;
+}

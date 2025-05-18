@@ -2,8 +2,8 @@
   <h2>Login</h2>
   <form (ngSubmit)="login()">
     <mat-form-field appearance="fill">
-      <mat-label>Username</mat-label>
-      <input matInput [(ngModel)]="username" name="username" placeholder="Enter your username" required />
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email" name="email" placeholder="Enter your e-mail" required />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
@@ -11,6 +11,7 @@
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Login</button>
   </form>
+  <p *ngIf="error" class="error-text">{{ error }}</p>
   <p class="link-text">
     Nincs még fiókod? <a routerLink="/registration">Regisztrálj itt!</a>
   </p>

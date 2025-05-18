@@ -1,5 +1,8 @@
 <div class="game-container">
-  <div class="game-card">
+  <div
+    class="game-card"
+    [style.background]="difficulty | difficultyColor"
+  >
     <app-hud
       [timer]="timer"
       [hasKey]="hasKey"
