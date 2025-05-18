@@ -58,29 +58,31 @@ tr:hover {
   background: #c23917;
 }
 
-button {
-  margin: 0 0.5rem;
-  padding: 0.4rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  background: #1976d2;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-button:disabled {
-  background: #b0bec5;
-  cursor: not-allowed;
-}
 .leaderboard-type-buttons {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  justify-content: center;
-}
-button.active {
-  background: #1976d2;
-  color: #fff;
+  
+  
+
+  button {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    color: #eee;
+    background: #11033b;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: none;
+    position: relative;
+    z-index: 1;
+
+    &.active {
+      font-size: 1.2rem;
+      background: #2d0b96;
+      box-shadow: 0 8px 16px -8px #ffffff, 0 4px 16px -4px #aaa;
+      z-index: 2;
+    }
+  }
 }
