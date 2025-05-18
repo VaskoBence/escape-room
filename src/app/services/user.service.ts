@@ -38,36 +38,33 @@ export class UserService {
     return updateDoc(userDocRef, data);
   }
 
-  async deleteProfile(userId: string) {
+ async deleteProfile(userId: string) {
   if (!userId) throw new Error('Hiányzó userId a profil törléshez!');
 
+  // 1. Scores törlés
+  const scoresRef = collection(this.firestore, 'scores');
+  const q = query(scoresRef, where('userId', '==', userId));
+  const snapshot = await getDocs(q);
+  const deletePromises = snapshot.docs.map(async docSnap => {
+    try {
+      await deleteDoc(docSnap.ref);
+    } catch (err) {
+      console.error('Score törlés hiba:', docSnap.id, err);
+    }
+  });
+  await Promise.all(deletePromises);
 
-  // 1. Törlés Firestore-ból
-  await deleteDoc(doc(this.firestore, 'users', userId));
-  
-  // Csak akkor töröld, ha létezik a progresses dokumentum!
+  // 2. Progresses törlés
   const progressDocRef = doc(this.firestore, 'progresses', userId);
   const progressSnap = await getDoc(progressDocRef);
   if (progressSnap.exists()) {
     await deleteDoc(progressDocRef);
   }
 
-  // 2. Scores törlés (maradhat)
-  const scoresRef = collection(this.firestore, 'scores');
-  const q = query(scoresRef, where('userId', '==', userId));
-  const snapshot = await getDocs(q);
-  const deletePromises = snapshot.docs.map(async docSnap => {
-  try {
-    await deleteDoc(docSnap.ref);
-  } catch (err) {
-    console.error('Score törlés hiba:', docSnap.id, err);
-  }
-});
+  // 3. Users törlés
+  await deleteDoc(doc(this.firestore, 'users', userId));
 
-  
-  await Promise.all(deletePromises);
-
-  // 3. Auth törlés (maradhat)
+  // 4. Auth törlés
   if (this.auth.currentUser && this.auth.currentUser.uid === userId) {
     await deleteUser(this.auth.currentUser);
   }
