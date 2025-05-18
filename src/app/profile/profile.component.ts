@@ -1,24 +1,13 @@
 import { Component } from '@angular/core';
 import { Auth, user } from '@angular/fire/auth';
-import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { firstValueFrom } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { User } from 'firebase/auth';
-import { MatFormField, MatLabel} from '@angular/material/form-field'; 
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import { deleteDoc } from '@angular/fire/firestore';
-import { deleteUser } from 'firebase/auth';
-
-
-
-
-interface UserProfile {
-  username: string;
-  email: string;
-}
+import { UserService, UserProfile } from '../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -41,11 +30,11 @@ export class ProfileComponent {
   isEditing = false;
   error = '';
   success = '';
-  userId: string | null = null; // <-- új mező
+  userId: string | null = null;
 
   constructor(
     private auth: Auth,
-    private firestore: Firestore
+    private userService: UserService
   ) {
     this.loadUserProfile();
   }
@@ -53,16 +42,12 @@ export class ProfileComponent {
   async loadUserProfile() {
     const authUser = await firstValueFrom(user(this.auth));
     if (authUser) {
-      this.userId = authUser.uid; 
-      const userDocRef = doc(this.firestore, 'users', authUser.uid);
-      const userSnap = await getDoc(userDocRef);
-      if (userSnap.exists()) {
-        this.currentUser = userSnap.data() as UserProfile;
-      }
+      this.userId = authUser.uid;
+      this.currentUser = await this.userService.getProfile(this.userId);
     }
   }
 
-  toggleEdit(): void{
+  toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (this.isEditing) {
       this.editedUser = { ...this.currentUser! };
@@ -72,46 +57,33 @@ export class ProfileComponent {
   }
 
   async saveChanges() {
-  this.error = '';
-  this.success = '';
-  try {
-    if (this.userId && this.editedUser) {
-      const userDocRef = doc(this.firestore, 'users', this.userId);
-      await updateDoc(userDocRef, {
-        username: this.editedUser.username,
-        email: this.editedUser.email
-      });
-      this.currentUser = { ...this.editedUser };
-      this.success = 'Profil sikeresen frissítve!';
-      this.isEditing = false; 
-      this.editedUser = null; 
+    this.error = '';
+    this.success = '';
+    try {
+      if (this.userId && this.editedUser) {
+        await this.userService.updateProfile(this.userId, {
+          username: this.editedUser.username,
+          email: this.editedUser.email
+        });
+        this.currentUser = { ...this.editedUser };
+        this.success = 'Profil sikeresen frissítve!';
+        this.isEditing = false;
+        this.editedUser = null;
+      }
+    } catch (err: any) {
+      this.error = err.message || 'Hiba történt a profil frissítésekor!';
     }
-  } catch (err: any) {
-    this.error = err.message || 'Hiba történt a profil frissítésekor!';
   }
-}
 
-async deleteProfile() {
+  async deleteProfile() {
     if (!this.userId) return;
     if (!confirm('Biztosan törlöd a profilodat? Ez nem visszavonható!')) return;
 
     try {
-      // 1. Törlés Firestore-ból
-      await deleteDoc(doc(this.firestore, 'users', this.userId));
-      await deleteDoc(doc(this.firestore, 'progresses', this.userId));
-
-      // 2. Törlés Firebase Auth-ból
-      const authUser = await firstValueFrom(user(this.auth));
-      if (authUser) {
-        await deleteUser(authUser);
-      }
-
-      // 3. Átirányítás loginre
+      await this.userService.deleteProfile(this.userId);
       window.location.href = '/login';
     } catch (err: any) {
       this.error = err.message || 'Hiba történt a profil törlésekor!';
     }
   }
-
-
 }

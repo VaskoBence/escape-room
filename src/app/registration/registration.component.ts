@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import {take} from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -30,6 +31,7 @@ export class RegistrationComponent {
 
   constructor(
     private authService: AuthService,
+    private userService: UserService, 
     private firestore: Firestore,
     private router: Router
   ) {
@@ -40,24 +42,20 @@ export class RegistrationComponent {
   });
 }
 
- async register() {
+async register() {
   this.error = '';
   try {
     // Firebase Auth regisztráció
     const cred = await this.authService.register(this.email, this.password);
 
-    // Firestore-ban user dokumentum létrehozása (userId = Firebase Auth uid)
-    await setDoc(doc(this.firestore, 'users', cred.user.uid), {
+    // Firestore-ban user dokumentum létrehozása a service-en keresztül!
+    await this.userService.createUser(cred.user.uid, {
       username: this.username,
-      email: this.email,
-      createdAt: new Date()
+      email: this.email
     });
 
-    // Firestore-ban progress dokumentum létrehozása (userId = Firebase Auth uid)
-    await setDoc(doc(this.firestore, 'progresses', cred.user.uid), {
-      userId: cred.user.uid,
-      completedLevels: []
-    });
+    // Firestore-ban progress dokumentum létrehozása
+    await this.userService.createProgress(cred.user.uid);
 
     alert('Sikeres regisztráció!');
     this.router.navigate(['/login']);
