@@ -12,5 +12,6 @@ export const routes: Routes = [
   { path: 'registration', loadComponent: () => import('./registration/registration.component').then(m => m.RegistrationComponent) },
   { path: 'levels', loadComponent: () => import('./levels/levels.component').then(m => m.LevelsComponent), canActivate: [authGuard] },
   { path: 'game/:levelId', loadComponent: () => import('./game/game.component').then(m => m.GameComponent), canActivate: [authGuard] },
-  { path: 'profile', loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent), canActivate: [authGuard] }
+  { path: 'profile', loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent), canActivate: [authGuard] },
+  { path: 'statistics', loadComponent: () => import('./statistics/statistics.component').then(m => m.StatisticsComponent), canActivate: [authGuard] }
 ];

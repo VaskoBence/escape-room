@@ -1,1 +1,26 @@
-<p>statistics works!</p>
+<h2>Leaderboard</h2>
+
+<div class="leaderboard-type-buttons">
+  <button [class.active]="type==='top10'" (click)="setType('top10')">Top 10 összes</button>
+  <button [class.active]="type==='recent'" (click)="setType('recent')">Utolsó 7 nap</button>
+  <button [class.active]="type==='mine'" (click)="setType('mine')">Saját eredményeim</button>
+  <button [class.active]="type==='bestByUser'" (click)="setType('bestByUser')">Legjobb mindenkitől</button>
+</div>
+
+<label for="level-select">Válassz szintet:</label>
+<select id="level-select" [ngModel]="selectedLevelId" (ngModelChange)="onLevelChange($event)">
+  <option *ngFor="let level of levels" [value]="level.id">{{ level.name }}</option>
+</select>
+
+<table *ngIf="leaderboard.length > 0">
+  <tr>
+    <th>Helyezés</th>
+    <th>Játékos</th>
+    <th>Idő</th>
+  </tr>
+  <tr *ngFor="let entry of leaderboard; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ entry.userName }}</td>
+    <td>{{ entry.time }} mp</td>
+  </tr>
+</table>

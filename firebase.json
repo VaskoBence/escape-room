@@ -5,7 +5,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/szabadulo-szoba",
+    "public": "dist/szabadulo-szoba/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
